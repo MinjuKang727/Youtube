@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <script src=""></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+      $('#file-selector').on('change', (event) => {
+         processFile(event.target.files[0])
+         console.log(file);
+         readJS(file);
+      });
+
+      function readJS(file) {
+         // Check if the file is a JS.
+         if (file.type && !file.type.endsWith('.js')) {
+            console.log('File is not a JS', file.type, file);
+            return;
+         }
+
+         const reader = new FileReader();
+         reader.addEventListener('load', (event) => {
+            js.src = event.target.result;
+         });
+         reader.readAsDataURL(file);
+      }
+
+      function showImage(){
+         let dir = $('input[name=imageDir]').val();
+         $('.imageFrame').attr("src", dir);
+      };
+   </script>
+</head>
+<body>
+   <input type="file" id="file-selector" accept=".js">
+   
+   <p>강의 이미지 보기</p>
+   <input type="text" name="imageDir" placeholder="이미지 경로 입력">
+   <input type="button" value="확인" onclick="showImage();">
+   <div>
+      <img src="" class="imageFrame">
+   </div>
+</body>
+</html>
